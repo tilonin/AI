@@ -1,0 +1,15 @@
+{
+  "date": "2026-11-17",
+  "engineTests": 30,
+  "playwright": {
+    "startTime": "2026-11-17T18:04:57.045Z",
+    "duration": 33978.264,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "providerMode": "Credentials are server-side only; live check pending publication",
+  "reference": "Modern World public page checked; gameplay launch rejected device",
+  "update": "Historical year selection and SQL worlds"
+}

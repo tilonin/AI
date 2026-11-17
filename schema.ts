@@ -1,0 +1,2 @@
+import {sqliteTable,text,integer,primaryKey} from 'drizzle-orm/sqlite-core';
+export const worlds=sqliteTable('world_saves',{ownerKey:text('owner_key').notNull(),id:text('id').notNull(),name:text('name').notNull(),startYear:integer('start_year').notNull(),mapYear:integer('map_year').notNull(),day:integer('day').notNull(),worldJson:text('world_json').notNull(),revision:integer('revision').notNull().default(1),updatedAt:text('updated_at').notNull()},t=>[primaryKey({columns:[t.ownerKey,t.id]})]);

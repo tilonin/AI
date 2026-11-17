@@ -1,0 +1,3 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';import {heatColor,metricScale} from './mapColors';
+test('heat scale has red yellow green anchors and bounds',()=>{assert.equal(heatColor(0),'#c04c47');assert.equal(heatColor(.5),'#d8b74c');assert.equal(heatColor(1),'#43976d');assert.equal(heatColor(-1),heatColor(0));});
+test('logarithmic GDP scale follows current world values',()=>{const s=metricScale([10,100,1000],true);assert.equal(s.normalize(10),0);assert.equal(s.normalize(1000),1);assert.ok(s.normalize(100)>.4&&s.normalize(100)<.6);assert.equal(metricScale([10,10],true).normalize(10),.5);});

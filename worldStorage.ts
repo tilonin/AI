@@ -1,0 +1,6 @@
+import {WorldStateManager,type GeoWorld} from './engine';
+export type WorldInfo={id:string;name:string;baseYear:number;mapYear:number;day:number;revision:number;updatedAt:string};
+export class WorldStorage{revisions=new Map<string,number>();constructor(public base='',public token=''){}async request(path:string,init:RequestInit={}){const r=await fetch(this.base.replace(/\/$/,'')+path,{...init,headers:{'Content-Type':'application/json',...(this.token?{Authorization:'Bearer '+this.token}:{}),...init.headers},signal:AbortSignal.timeout(20000)});const data=await r.json();if(!r.ok)throw new Error(data.error??'Ошибка базы данных: '+r.status);return data;}
+async list():Promise<WorldInfo[]>{return (await this.request('/api/worlds')).worlds;}
+async load(id:string){const data=await this.request('/api/worlds/'+encodeURIComponent(id));const world=WorldStateManager.validate(data.world);this.revisions.set(id,data.revision);return world;}
+async save(id:string,world:GeoWorld,force=false){const data=await this.request('/api/worlds/'+encodeURIComponent(id),{method:'PUT',body:JSON.stringify({name:world.name??'Мир '+(world.baseYear??2030),world,...(force?{}:{revision:this.revisions.get(id)??0})})});this.revisions.set(id,data.revision);return data;}}
